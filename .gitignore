@@ -1,3 +1,14 @@
+.DS_Store
+source_file.txt
+test_*
+714/*
+1609/*
+10141/*
+10143/*
+10321/*
+13450/*
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
