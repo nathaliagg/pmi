@@ -1,0 +1,130 @@
+---
+title: "PMI - Control"
+author: "NGG"
+date: "01/25/2020"
+---
+
+```{r libraries echo=FALSE}
+### LOAD LIBRARIES
+suppressWarnings(suppressMessages(library(tidyverse)))
+
+list_of_colors <- c("#2166AC","#66C2A5" ,"#8DA0CB", "#E78AC3","#FFED6F","#F4A582",
+                    "#984EA3", "#E41A1C", "#4DAF4A","#E7298A","#E6AB02","#A6D854","#666666",
+                    "#543005","#386CB0","#1B9E77", "#D95F02", "#7570B3","#B3B3B3") # 21 colors
+
+list_of_colors <- c(list_of_colors,list_of_colors,list_of_colors)
+
+inputfile = read.csv('pmi_taxonomy_control_samples_melted.csv')
+
+my_theme <- theme_linedraw(base_size = size) +
+  theme(
+    legend.title = element_text(size = size-2, face="bold"),
+    legend.text = element_text(size=size-4),
+    legend.key.size = unit(0.3,"cm"),
+    plot.title = element_text(size=size+3, face="bold"),
+    strip.background = element_rect(fill="white", colour="black"), 
+    panel.spacing.x = unit(1,"lines"),
+    strip.text = element_text(size = size, colour='black', face="bold"),
+    axis.title.y = element_text(size = size, face="bold"),
+    axis.title.x = element_blank(),
+    axis.text.x = element_blank()
+  )
+
+```
+
+
+```{r fig.height=5}
+## Parameters for figutes
+size = 10
+hei = 4
+wid = 6
+res = 300
+
+barplot1 <- inputfile %>% 
+  select(SampleID, Phylum, Count) %>% 
+  group_by(SampleID, Phylum) %>% 
+  summarise(Count = median(Count)) %>%
+  ggplot(aes(fill=Phylum, y=Count, x=SampleID)) +
+  geom_bar(position="fill", stat="identity", width=1, color = "black", size = 0.1) +
+  scale_fill_manual(values= list_of_colors) +
+  ylab("Relative Abundance (%)") + 
+  #ggtitle(title[i]) +
+  scale_x_discrete(expand = c(0, 0)) +
+  scale_y_continuous(labels = scales::percent_format(), expand = c(0,0)) +
+  my_theme +
+  guides(fill=guide_legend(ncol=1))
+
+filename <- "barplot_phylum.png"
+ggsave(filename, barplot1, width = wid, height = hei, dpi = res)
+
+
+barplot2 <- inputfile %>% 
+  select(SampleID, Class, Count) %>% 
+  group_by(SampleID, Class) %>% 
+  summarise(Count = median(Count)) %>%
+  ggplot(aes(fill=Class, y=Count, x=SampleID)) +
+  geom_bar(position="fill", stat="identity", width=1, color = "black", size = 0.1) +
+  scale_fill_manual(values= list_of_colors) +
+  ylab("Relative Abundance (%)") + 
+  #ggtitle(title[i]) +
+  scale_x_discrete(expand = c(0, 0)) +
+  scale_y_continuous(labels = scales::percent_format(), expand = c(0,0)) +
+  my_theme +
+  guides(fill=guide_legend(ncol=1))
+
+filename <- "barplot_class.png"
+ggsave(filename, barplot2, width = wid, height = hei, dpi = res)
+
+
+barplot3 <- inputfile %>% 
+  select(SampleID, Order, Count) %>% 
+  group_by(SampleID, Order) %>% 
+  summarise(Count = median(Count)) %>%
+  ggplot(aes(fill=Order, y=Count, x=SampleID)) +
+  geom_bar(position="fill", stat="identity", width=1, color = "black", size = 0.1) +
+  scale_fill_manual(values= list_of_colors) +
+  ylab("Relative Abundance (%)") + 
+  #ggtitle(title[i]) +
+  scale_x_discrete(expand = c(0, 0)) +
+  scale_y_continuous(labels = scales::percent_format(), expand = c(0,0)) +
+  my_theme +
+  guides(fill=guide_legend(ncol=1))
+
+filename <- "barplot_order.png"
+ggsave(filename, barplot3, width = wid, height = hei, dpi = res)
+
+barplot4 <- inputfile %>% 
+  select(SampleID, Family, Count) %>% 
+  group_by(SampleID, Family) %>% 
+  summarise(Count = median(Count)) %>%
+  ggplot(aes(fill=Family, y=Count, x=SampleID)) +
+  geom_bar(position="fill", stat="identity", width=1, color = "black", size = 0.1) +
+  scale_fill_manual(values= list_of_colors) +
+  ylab("Relative Abundance (%)") + 
+  #ggtitle(title[i]) +
+  scale_x_discrete(expand = c(0, 0)) +
+  scale_y_continuous(labels = scales::percent_format(), expand = c(0,0)) +
+  my_theme +
+  guides(fill=guide_legend(ncol=1))
+
+filename <- "barplot_family.png"
+ggsave(filename, barplot4, width = wid, height = hei, dpi = res)
+
+barplot5 <- inputfile %>% 
+  select(SampleID, Genus, Count) %>% 
+  group_by(SampleID, Genus) %>% 
+  summarise(Count = median(Count)) %>%
+  ggplot(aes(fill=Genus, y=Count, x=SampleID)) +
+  geom_bar(position="fill", stat="identity", width=1, color = "black", size = 0.1) +
+  scale_fill_manual(values= list_of_colors) +
+  ylab("Relative Abundance (%)") + 
+  #ggtitle(title[i]) +
+  scale_x_discrete(expand = c(0, 0)) +
+  scale_y_continuous(labels = scales::percent_format(), expand = c(0,0)) +
+  my_theme +
+  guides(fill=guide_legend(ncol=1))
+
+filename <- "barplot_genus.png"
+ggsave(filename, barplot5, width = wid, height = hei, dpi = res)
+```
+

@@ -8,6 +8,7 @@ test_*
 10321/*
 99_otu_taxonomy.txt
 pmi_control_feature-table*
+pmi_taxonomy_control_samples.csv
 
 
 # Byte-compiled / optimized / DLL files
